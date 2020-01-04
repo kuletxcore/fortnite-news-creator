@@ -345,5 +345,3 @@ def GenerateCard5Titles(Language, item):
     )
 
     return card
-
-GetBRNews(Language = "it")
