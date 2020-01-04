@@ -17,6 +17,9 @@ It will create automatically a mp4 file called "News{NewsType}.mp4"
 ```
 
 Output:
+
 ![BR](https://github.com/MyNameIsDark01/fortnitenewscreator/blob/master/examples/NewsBR.gif?raw=true)
-![CREATIVE](https://raw.githubusercontent.com/MyNameIsDark01/fortnitenewscreator/master/examples/NewsCreative.gif)
-![STW](https://raw.githubusercontent.com/MyNameIsDark01/fortnitenewscreator/master/examples/NewsSTW.gif)
+
+![CREATIVE](https://github.com/MyNameIsDark01/fortnitenewscreator/blob/master/examples/NewsCreative.gif?raw=true)
+
+![STW](https://github.com/MyNameIsDark01/fortnitenewscreator/blob/master/examples/NewsSTW.gif?raw=true)
