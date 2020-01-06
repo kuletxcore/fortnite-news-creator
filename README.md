@@ -2,15 +2,15 @@
 ## Setup
 
 1) Install Python
-  - sudo apt install python3
-  - sudo apt install python3-pip
+    - sudo apt install python3
+    - sudo apt install python3-pip
   
 2) Install the requirements
-  - sudo pip3 install -r requirements.txt
+    - sudo pip3 install -r requirements.txt
 
 3) Install ffmpeg and x264lib (for ubuntu below)
-  - sudo apt install ffmpeg
-  - sudo apt install libx264-dev
+    - sudo apt install ffmpeg
+    - sudo apt install libx264-dev
 
 ## Compatibility
 ### Twitter:
