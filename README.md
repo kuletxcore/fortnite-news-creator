@@ -1,4 +1,7 @@
 # Fortnite News Creator
+
+![](https://img.shields.io/github/stars/MyNameIsDark01/fortnitenewscreator.svg) ![](https://img.shields.io/github/forks/MyNameIsDark01/fortnitenewscreator.svg) ![](https://img.shields.io/github/tag/MyNameIsDark01/fortnitenewscreator.svg) ![](https://img.shields.io/github/release/MyNameIsDark01/fortnitenewscreator.svg) ![](https://img.shields.io/github/issues/MyNameIsDark01/fortnitenewscreator.svg)
+
 ## Setup
 
 1) Install Python
