@@ -1,0 +1,20 @@
+{
+"language": "en",
+"sort": 0,
+"twitter":{
+	"enabled": false,
+	"consumer_key": "",
+	"consumer_secret": "",
+	"access_token": "",
+	"access_token_secret": "",
+	"message": ""
+	},
+"telegram":{
+	"enabled": false,
+	"bot_token": "",
+	"chat_id": "",
+	"message": "",
+	"parse_mode": "html"
+	},
+"delay": 15
+}
