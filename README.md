@@ -2,7 +2,26 @@
 ## Setup
 
 1) Install Python
-2) Install the requirements (pip3 install -r requirements.txt)
+2) Install the requirements (pip install -r requirements.txt or pip3 install -r requirements.txt)
+3) Install ffmpeg and x264lib (for ubuntu below)
+  - sudo apt install ffmpeg
+  - sudo apt install libx264-dev
+
+## Compatibility
+### Twitter:
+
+If You want post on Twitter use Feed.py, remember to compile config.json.
+  - Enable Twitter;
+  - Insert app tokens;
+  - Insert Twitter Message.
+
+### Telegram:
+
+If You want post on Telegram use Feed.py, remember to compile config.json.
+  - Enable Telegram;
+  - Insert Bot Token;
+  - Insert Chat_ID;
+  - Insert Telegram Message and parse_mode.
 
 ## Example:
 
