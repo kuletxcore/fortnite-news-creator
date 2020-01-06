@@ -2,7 +2,12 @@
 ## Setup
 
 1) Install Python
-2) Install the requirements (pip install -r requirements.txt or pip3 install -r requirements.txt)
+  - sudo apt install python3
+  - sudo apt install python3-pip
+  
+2) Install the requirements
+  - sudo pip3 install -r requirements.txt
+
 3) Install ffmpeg and x264lib (for ubuntu below)
   - sudo apt install ffmpeg
   - sudo apt install libx264-dev
@@ -24,6 +29,8 @@ If You want post on Telegram use Feed.py, remember to compile config.json.
   - Insert Telegram Message and parse_mode.
 
 ## Example:
+
+If you want use this sort of library with your script copy News.py, util.py, config.json and assets folder. (It's a complete script so... WHY DO YOU WANT USE WITH ANOTHER SCRIPT?)
 
 ```
 import News
