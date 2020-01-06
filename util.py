@@ -54,7 +54,7 @@ class Utility:
             except Exception as e:
                 print(f"Failed to convert to human-readable time, {e}")
 
-    def ReadFile(self, filename: str, extension: str, directory: str = "./FortniteZeroItalia/"):
+    def ReadFile(self, filename: str, extension: str, directory: str = ""):
         """
         Read and return the contents of the specified file.
 
@@ -73,7 +73,7 @@ class Utility:
 class ImageUtil:
     """Class containing utilitarian image-based functions intended to reduce duplicate code."""
 
-    def Open(self, filename: str, directory: str = "./FortniteZeroItalia/assets/images/"):
+    def Open(self, filename: str, directory: str = ""):
         """Return the specified image file."""
 
         return Image.open(f"{directory}{filename}")
@@ -107,12 +107,12 @@ class ImageUtil:
         """Return the tuple necessary for horizontal centering and an optional vertical distance."""
 
         return (int(backgroundWidth / 2) - int(foregroundWidth / 2), distancetop)
-    
+
     def Font(
         self,
         size: int,
-        font: str = "BurbankBigCondensed-Black.otf",
-        directory: str = "./FortniteZeroItalia/assets/fonts/",
+        font: str = "burbanksmall-black.otf",
+        directory: str = "assts/Fonts/",
     ):
         """Return a font object with the specified font file and size."""
 
@@ -130,7 +130,7 @@ class ImageUtil:
         text: str,
         size: int,
         maxSize: int,
-        font: str = "BurbankBigCondensed-Black.otf",
+        font: str = "burbanksmall-black.otf",
     ):
         """Return the font and width which fits the provided text within the specified maxiumum width."""
 
@@ -147,8 +147,8 @@ class ImageUtil:
     def Font1(
         self,
         size: int,
-        font: str = "Burbank Big Condensed Bold.otf",
-        directory: str = "./FortniteZeroItalia/assets/fonts/",
+        font: str = "NotoSansKR-Regular.otf",
+        directory: str = "assts/Fonts/",
     ):
         """Return a font object with the specified font file and size."""
 
@@ -166,7 +166,7 @@ class ImageUtil:
         text: str,
         size: int,
         maxSize: int,
-        font: str = "Burbank Big Condensed Bold.otf",
+        font: str = "NotoSansKR-Regular.otf",
     ):
         """Return the font and width which fits the provided text within the specified maxiumum width."""
 
@@ -179,3 +179,39 @@ class ImageUtil:
             textWidth, _ = font.getsize(text)
 
         return ImageUtil.Font1(self, size), textWidth
+
+    def Font2(
+        self,
+        size: int,
+        font: str = "NotoSansJP-Bold.otf",
+        directory: str = "assets/Fonts/",
+    ):
+        """Return a font object with the specified font file and size."""
+
+        try:
+            return ImageFont.truetype(f"{directory}{font}", size)
+        except OSError:
+            print("Burbank Big Condensed Bold.otf not found, defaulted font to LuckiestGuy-Regular.ttf")
+
+            return ImageFont.truetype(f"{directory}LuckiestGuy-Regular.ttf", size)
+        except Exception as e:
+            print(f"Failed to load font, {e}")
+
+    def FitTextX2(
+        self,
+        text: str,
+        size: int,
+        maxSize: int,
+        font: str = "NotoSansJP-Bold.otf",
+    ):
+        """Return the font and width which fits the provided text within the specified maxiumum width."""
+
+        font = ImageUtil.Font2(self, size)
+        textWidth, _ = font.getsize(text)
+
+        while textWidth >= maxSize:
+            size = size - 1
+            font = ImageUtil.Font2(self, size)
+            textWidth, _ = font.getsize(text)
+
+        return ImageUtil.Font2(self, size), textWidth

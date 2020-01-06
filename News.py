@@ -12,6 +12,10 @@ from math import ceil
 TitleColor = (255,255,255)
 DescriptionColor = (51,236,254)
 
+config = open("config.json", "r", encoding = "utf-8").read()
+config = json.loads(config)
+sort = config["sort"]
+
 def GetCreativeNews(Language = "en"):
 
     FortniteGame = requests.get("https://fortnitecontent-website-prod07.ol.epicgames.com/content/api/pages/fortnite-game",headers={'Accept-Language' : Language.lower()}).json()["creativenews"]["news"]["motds"]
@@ -25,7 +29,7 @@ def GetCreativeNews(Language = "en"):
 
     for index, Message in enumerate(FortniteGame):
         news = News(Language, FortniteGame, Message)
-        news.save(f"News/NewsCreative/{index}.png")
+        news.save(f"News/NewsCreative/{index - sort}.png")
 
     for filename in glob.glob('News/NewsCreative/*.png'):
         img = cv2.imread(filename)
@@ -33,11 +37,13 @@ def GetCreativeNews(Language = "en"):
         size = (width,height)
         image_array.append(img)
 
-    out = cv2.VideoWriter('NewsCreative.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 0.3, size)
+    out = cv2.VideoWriter('NewsCreative.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 1, size)
 
     for i in range(len(image_array)):
-        out.write(image_array[i])
+        for item in range(4):
+            out.write(image_array[i])
     out.release
+
 
 def GetSTWNews(Language = "en"):
 
@@ -52,7 +58,7 @@ def GetSTWNews(Language = "en"):
 
     for index, Message in enumerate(FortniteGame):
         news = News(Language, FortniteGame, Message)
-        news.save(f"News/NewsSTW/{index}.png")
+        news.save(f"News/NewsSTW/{index - sort}.png")
 
     for filename in glob.glob('News/NewsSTW/*.png'):
         img = cv2.imread(filename)
@@ -60,10 +66,11 @@ def GetSTWNews(Language = "en"):
         size = (width,height)
         image_array.append(img)
 
-    out = cv2.VideoWriter('NewsSTW.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 0.3, size)
+    out = cv2.VideoWriter('NewsSTW.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 1, size)
 
     for i in range(len(image_array)):
-        out.write(image_array[i])
+        for item in range(4):
+            out.write(image_array[i])
     out.release
 
 def GetBRNews(Language = "it"):
@@ -74,23 +81,24 @@ def GetBRNews(Language = "it"):
 
     image_array = []
 
-    for filename in glob.glob('News/NewsBR/*.png'):
+    for filename in glob.glob('News/NewsBR/*.jpg'):
         os.remove(filename)
 
     for index, Message in enumerate(FortniteGame):
         news = News(Language, FortniteGame, Message)
-        news.save(f"News/NewsBR/{index}.png")
+        news.save(f"News/NewsBR/{index - sort}.jpg")
 
-    for filename in glob.glob('News/NewsBR/*.png'):
+    for filename in glob.glob('News/NewsBR/*.jpg'):
         img = cv2.imread(filename)
         height, width, layers = img.shape
         size = (width,height)
         image_array.append(img)
 
-    out = cv2.VideoWriter('NewsBR.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 0.3, size)
+    out = cv2.VideoWriter('NewsBR.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 1, size)
 
     for i in range(len(image_array)):
-        out.write(image_array[i])
+        for item in range(4):
+            out.write(image_array[i])
     out.release
 
 def News(Language, FortniteGame, Message):
@@ -102,7 +110,7 @@ def News(Language, FortniteGame, Message):
     else:
         DescriptionFont = ImageFont.truetype('assets/Fonts/burbanksmall-bold.otf', 36)
 
-    Background = Image.new("RGBA", (1920, 1080))
+    Background = Image.new("RGB", (1920, 1080))
     Draw = ImageDraw.Draw(Background)
 
     msg = ""
@@ -243,7 +251,12 @@ def GenerateCard1Titles(Language, item):
     textWidth, _ = font.getsize(title)
     if textWidth >= 1920:
         # Ensure that the item name does not overflow
-        font, textWidth = ImageUtil.FitTextX(item, title, 16, 1920)
+        if Language == "ja":
+            font, textWidth = ImageUtil.FitTextX2(item, title, 16, 1920)
+        elif Language == "ko":
+            font, textWidth = ImageUtil.FitTextX1(item, title, 16, 1920)
+        else:
+            font, textWidth = ImageUtil.FitTextX(item, title, 16, 1920)
     canvas.text(
         ImageUtil.CenterX(item, textWidth, card.width, 15),
         title,
@@ -289,7 +302,12 @@ def GenerateCard3Titles(Language, item):
     textWidth, _ = font.getsize(title)
     if textWidth >= 620:
         # Ensure that the item name does not overflow
-        font, textWidth = ImageUtil.FitTextX(item, title, 16, 620)
+        if Language == "ja":
+            font, textWidth = ImageUtil.FitTextX2(item, title, 16, 1920)
+        elif Language == "ko":
+            font, textWidth = ImageUtil.FitTextX1(item, title, 16, 1920)
+        else:
+            font, textWidth = ImageUtil.FitTextX(item, title, 16, 1920)
     canvas.text(
         ImageUtil.CenterX(item, textWidth, card.width, 15),
         title,
@@ -336,7 +354,12 @@ def GenerateCard5Titles(Language, item):
     textWidth, _ = font.getsize(title)
     if textWidth >= 364:
         # Ensure that the item name does not overflow
-        font, textWidth = ImageUtil.FitTextX(item, title, 16, 364)
+        if Language == "ja":
+            font, textWidth = ImageUtil.FitTextX2(item, title, 16, 1920)
+        elif Language == "ko":
+            font, textWidth = ImageUtil.FitTextX1(item, title, 16, 1920)
+        else:
+            font, textWidth = ImageUtil.FitTextX(item, title, 16, 1920)
     canvas.text(
         ImageUtil.CenterX(item, textWidth, card.width, 15),
         title,
