@@ -73,7 +73,7 @@ def GetSTWNews(Language = "en"):
             out.write(image_array[i])
     out.release
 
-def GetBRNews(Language = "it"):
+def GetBRNews(Language = "en"):
 
     FortniteGame = requests.get("https://fortnitecontent-website-prod07.ol.epicgames.com/content/api/pages/fortnite-game",headers={'Accept-Language' : Language.lower()}).json()["battleroyalenews"]["news"]["motds"]
 
@@ -162,7 +162,7 @@ def News(Language, FortniteGame, Message):
 
 def TopUI(Language, FortniteGame):
 
-    TopUI = Image.new("RGB", (1920, 50))
+    TopUI = Image.new("RGBA", (1920, 50))
     canvas = ImageDraw.Draw(TopUI)
 
     titles = []
@@ -185,6 +185,20 @@ def TopUI(Language, FortniteGame):
 
                 i = i + 1
 
+    elif len(titles) == 2:
+        rows = max(ceil(len(titles) / 2), ceil(len(titles) / 2))
+
+        i = 0
+        for item in FortniteGame:
+            card = GenerateCard2Titles(Language, item)
+            if card is not None:
+                TopUI.paste(
+                    card,
+                    ((0 + ((i % 2) * (card.width)), (0 + ((i // 2) * (card.height)))))
+                )
+
+                i = i + 1
+
     elif len(titles) == 3:
         rows = max(ceil(len(titles) / 3), ceil(len(titles) / 3))
 
@@ -199,6 +213,20 @@ def TopUI(Language, FortniteGame):
 
                 i = i + 1
 
+    elif len(titles) == 4:
+        rows = max(ceil(len(titles) / 4), ceil(len(titles) / 4))
+
+        i = 0
+        for item in FortniteGame:
+            card = GenerateCard4Titles(Language, item)
+            if card is not None:
+                TopUI.paste(
+                    card,
+                    ((0 + ((i % 4) * (card.width)), (0 + ((i // 4) * (card.height)))))
+                )
+
+                i = i + 1
+                
     elif len(titles) == 5:
         rows = max(ceil(len(titles) / 5), ceil(len(titles) / 5))
 
@@ -266,6 +294,57 @@ def GenerateCard1Titles(Language, item):
 
     return card
 
+def GenerateCard2Titles(Language, item):
+
+    card = Image.new("RGBA", (960, 50))
+
+    canvas = ImageDraw.Draw(card)
+
+    if Language == "ja":
+        font = ImageFont.truetype('assets/Fonts/NotoSansJP-Bold.otf', 15)
+    elif Language == "ko":
+        font = ImageFont.truetype('assets/Fonts/NotoSansKR-Regular.otf', 15)
+    else:
+        font = ImageFont.truetype('assets/Fonts/burbanksmall-black.otf', 15)
+
+    title = item["title"]
+    title = title.upper()
+
+    icon = item["image"]
+    icon = ImageUtil.Download(item, icon)
+    icon = ImageUtil.RatioResize(item, icon, 960, 540)
+    card.paste(icon, ImageUtil.CenterX(item, icon.width, card.width))
+
+    try:
+        TINT_COLOR = (0, 0, 205)  # Black
+        TRANSPARENCY = 0.7  # Degree of transparency, 0-100%
+        OPACITY = int(255 * TRANSPARENCY)
+
+        cardBottom = Image.new("RGBA", (960,360), TINT_COLOR)
+        draw = ImageDraw.Draw(cardBottom)
+        draw.rectangle(((960, 360), (0, 0)), fill=TINT_COLOR+(OPACITY,))
+    except Exception as e:
+        print(e)
+    card.paste(cardBottom, (0, 0), cardBottom)
+
+    textWidth, _ = font.getsize(title)
+    if textWidth >= 960:
+        # Ensure that the item name does not overflow
+        if Language == "ja":
+            font, textWidth = ImageUtil.FitTextX2(item, title, 16, 960)
+        elif Language == "ko":
+            font, textWidth = ImageUtil.FitTextX1(item, title, 16, 960)
+        else:
+            font, textWidth = ImageUtil.FitTextX(item, title, 16, 960)
+    canvas.text(
+        ImageUtil.CenterX(item, textWidth, card.width, 15),
+        title,
+        (255, 255, 255),
+        font=font,
+    )
+
+    return card
+
 def GenerateCard3Titles(Language, item):
 
     card = Image.new("RGBA", (640, 50))
@@ -308,6 +387,58 @@ def GenerateCard3Titles(Language, item):
             font, textWidth = ImageUtil.FitTextX1(item, title, 16, 1920)
         else:
             font, textWidth = ImageUtil.FitTextX(item, title, 16, 1920)
+    canvas.text(
+        ImageUtil.CenterX(item, textWidth, card.width, 15),
+        title,
+        (255, 255, 255),
+        font=font,
+    )
+
+    return card
+
+def GenerateCard4Titles(Language, item):
+
+    card = Image.new("RGBA", (480, 50))
+
+    canvas = ImageDraw.Draw(card)
+
+    if Language == "ja":
+        font = ImageFont.truetype('assets/Fonts/NotoSansJP-Bold.otf', 15)
+    elif Language == "ko":
+        font = ImageFont.truetype('assets/Fonts/NotoSansKR-Regular.otf', 15)
+    else:
+        font = ImageFont.truetype('assets/Fonts/burbanksmall-black.otf', 15)
+
+    title = item["title"]
+    title = title.upper()
+
+    icon = item["image"]
+    icon = ImageUtil.Download(item, icon)
+    icon = ImageUtil.RatioResize(item, icon, 480, 270)
+    card.paste(icon, ImageUtil.CenterX(item, icon.width, card.width))
+
+    ### 1920 * 1080 = 384
+    try:
+        TINT_COLOR = (0, 0, 205)  # Black
+        TRANSPARENCY = 0.7  # Degree of transparency, 0-100%
+        OPACITY = int(255 * TRANSPARENCY)
+
+        cardBottom = Image.new("RGBA", (480,360), TINT_COLOR)
+        draw = ImageDraw.Draw(cardBottom)
+        draw.rectangle(((480, 360), (0, 0)), fill=TINT_COLOR+(OPACITY,))
+    except Exception as e:
+        print(e)
+    card.paste(cardBottom, (0, 0), cardBottom)
+
+    textWidth, _ = font.getsize(title)
+    if textWidth >= 480:
+        # Ensure that the item name does not overflow
+        if Language == "ja":
+            font, textWidth = ImageUtil.FitTextX2(item, title, 16, 480)
+        elif Language == "ko":
+            font, textWidth = ImageUtil.FitTextX1(item, title, 16, 480)
+        else:
+            font, textWidth = ImageUtil.FitTextX(item, title, 16, 480)
     canvas.text(
         ImageUtil.CenterX(item, textWidth, card.width, 15),
         title,
