@@ -35,8 +35,8 @@ while True:
 
         if FortniteGame != StoredNews:
             print("Cambiamenti")
+            News.GetBRNews(Language = language.lower())
             if twitterEnabled is True:
-                News.GetBRNews(Language = language.lower())
                 try:
                     twitter = Twython(twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret)
                     twitter.verify_credentials()
