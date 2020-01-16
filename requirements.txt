@@ -1,5 +1,5 @@
 pillow
 requests
 opencv-python
-telegram-python
+python-telegram-bot
 twython
